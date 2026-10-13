@@ -574,12 +574,6 @@ Once the evaluation has been run, replace the pending entries with measured resu
 
 DEFINE-AI is an evolving project, and the current implementation has several limitations.
 
-Programming Language Support
-
-The current structural parser uses Python AST.
-
-Comprehensive support for JavaScript, TypeScript, Java, and other programming languages has not yet been implemented.
-
 Retrieval Quality
 
 Hybrid retrieval combines semantic and keyword ranking, but relevant code may still be missed or ranked incorrectly.
@@ -616,47 +610,6 @@ Deployment
 
 The current setup is designed primarily for local development. Production deployment, multi-user isolation, authentication, rate limiting, and operational monitoring require additional work.
 
-15. Future Improvements
-
-The following improvements are planned or under consideration.
-
-Retrieval and Evaluation
-Build a verified retrieval evaluation dataset.
-Measure Recall@K and MRR.
-Improve retrieval of exact function and class names.
-Reduce redundant overlapping chunks when appropriate.
-Evaluate answer grounding and citation accuracy.
-Graph-Aware Question Answering
-Retrieve graph relationships alongside source-code chunks.
-Answer questions about module dependencies.
-Explore execution flow across components.
-Identify potentially affected components when a function changes.
-Combine graph evidence and source-code evidence in generated explanations.
-Multi-Language Support
-Introduce a parser abstraction.
-Evaluate Tree-sitter for additional programming languages.
-Extend structural extraction and dependency analysis.
-Preserve accurate source locations across supported languages.
-User Experience
-Improve chat history management.
-Add retry and clear-conversation controls.
-Improve citation validation and source navigation.
-Provide clearer indexing and analysis progress indicators.
-Improve usability for large repositories.
-Performance and Reliability
-Benchmark analysis and indexing time.
-Improve handling of large repositories.
-Add structured logging.
-Expand automated testing.
-Improve error handling and index lifecycle management.
-Deployment
-Make frontend and backend configuration environment-based.
-Explore deployment options for the frontend and API.
-Design appropriate repository isolation.
-Add operational monitoring and resource limits.
-Evaluate options for hosting or serving local and remote LLMs.
-
-These improvements will be prioritized based on evaluation results and the requirements of the intended users.
 
 Project Status
 
