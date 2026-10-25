@@ -1,0 +1,6 @@
+{
+  "repository_root": "C:\\Users\\satya\\OneDrive\\Desktop\\Define-ai\\backend\\repositories\\AI_Video_Ajent",
+  "chunk_count": 38,
+  "embedding_dimension": 384,
+  "model_name": "sentence-transformers/all-MiniLM-L6-v2"
+}

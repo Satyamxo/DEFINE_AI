@@ -1,53 +1,61 @@
-DEFINE-AI — AI-Powered Repository Intelligence
+DEFINE-AI --- AI-Powered Repository Intelligence
 
-<<<<<<< HEAD
-Understand codebases. Explore software architecture. Ask questions grounded in source code.
+Understand codebases. Explore software architecture. Ask questions
+grounded in source code.
 
-DEFINE-AI helps developers understand unfamiliar Python repositories through static code analysis, interactive dependency visualization, and Retrieval-Augmented Generation (RAG).
+DEFINE-AI helps developers understand unfamiliar Python repositories
+through static code analysis, interactive dependency visualization, and
+Retrieval-Augmented Generation (RAG).
 
-Given a GitHub repository, the system analyzes its structure, builds a graph of code components, and lets users inspect source files and ask natural-language questions. The RAG pipeline retrieves relevant code before sending context to a locally running language model.
+Given a GitHub repository, the system analyzes its structure, builds a
+graph of code components, and lets users inspect source files and ask
+natural-language questions. The RAG pipeline retrieves relevant code
+before sending context to a locally running language model.
 
-Current scope: Python-focused repository analysis and repository question answering.
+Current scope: Python-focused repository analysis and repository
+question answering.
+
+## Project Demo
+
+Watch the DEFINE-AI project walkthrough on YouTube.
+
+ **[Watch the Full Demo on YouTube](https://youtu.be/AzGWirXu-rI)**
+
+
 
 Key Features
 
-Repository analysis: Clone a GitHub repository and scan supported source files.
+Repository analysis: Clone a GitHub repository and scan
+supported source files.
 
-Python AST parsing: Extract classes, functions, methods, imports, and source locations.
+Python AST parsing: Extract classes, functions, methods,
+imports, and source locations.
 
-Dependency graph: Represent repository components and relationships with NetworkX.
+Dependency graph: Represent repository components and
+relationships with NetworkX.
 
-Interactive visualization: Explore graph nodes using React Flow, including node selection and nested expansion/collapse.
+Interactive visualization: Explore graph nodes using React Flow,
+including node selection and nested expansion/collapse.
 
-Source-code viewer: Open repository files and inspect source code with line numbers.
+Source-code viewer: Open repository files and inspect source
+code with line numbers.
 
-Hybrid retrieval: Combine semantic and keyword-based retrieval, with weighted Reciprocal Rank Fusion (RRF) to combine rankings.
+Hybrid retrieval: Combine semantic and keyword-based retrieval,
+with weighted Reciprocal Rank Fusion (RRF) to combine rankings.
 
-Code-aware chunking: Preserve file paths, symbol names, and line-range metadata with source chunks.
+Code-aware chunking: Preserve file paths, symbol names, and
+line-range metadata with source chunks.
 
-RAG-based Q&A: Ask questions about an indexed repository and receive answers based on retrieved code context.
+RAG-based Q&A: Ask questions about an indexed repository and
+receive answers based on retrieved code context.
 
-Local inference: Generate answers using an Ollama-hosted language model and local embeddings.
-
-Screenshots
-
-Add screenshots captured from the running application to docs/images/, then update the filenames below.
-
-Repository Graph
-
-
-
-Source Code Exploration
-
-
-
-AI Repository Q&A
-
-
+Local inference: Generate answers using an Ollama-hosted
+language model and local embeddings.
 
 Architecture
 
-DEFINE-AI has two main workflows: repository analysis and RAG-based question answering.
+DEFINE-AI has two main workflows: repository analysis and RAG-based
+question answering.
 
 1. Repository Analysis
 
@@ -86,7 +94,7 @@ Sentence Transformers Embeddings
         |
         v
 Local Vector Index
-        |
+
 User Question
         |
         v
@@ -104,109 +112,60 @@ Local LLM through Ollama
         v
 Answer + Retrieved Source Metadata
 
-The graph-analysis and RAG workflows are separate components in the current implementation. The diagram does not imply that graph relationships are automatically used during retrieval.
+Implementation note: The graph-analysis and RAG workflows are
+separate components in the current implementation. Graph relationships
+are not automatically used during RAG retrieval.
 
-Technology Stack
+ Technology Stack
 
-Component
+Component               Technology                                 Purpose
 
-Technology
+Frontend                React                                      User interface
 
-Purpose
+Styling                 Tailwind CSS                               Interface styling
 
-Frontend
+Build tooling           Vite                                       Frontend development
+and bundling
 
-React
+Graph visualization     React Flow (@xyflow/react)               Interactive repository
+graph
 
-User interface
+Graph layout            Dagre                                      Graph node positioning
 
-Styling
+Backend                 Python, FastAPI                            Application logic and
+HTTP API
 
-Tailwind CSS
+Request validation      Pydantic                                   API request validation
 
-Interface styling
+Code parsing            Python AST                                 Extract Python code
+structure
 
-Build tooling
+Graph construction      NetworkX                                   Represent repository
+relationships
 
-Vite
+Embeddings              Sentence Transformers                      Generate vector
+representations of code
+chunks
 
-Frontend development and bundling
+Embedding model         sentence-transformers/all-MiniLM-L6-v2   Text/code-chunk
+embeddings
 
-Graph visualization
+Numerical processing    NumPy                                      Process embedding
+arrays
 
-React Flow (@xyflow/react)
+Local LLM runtime       Ollama                                     Run the configured
+language model locally
 
-Interactive repository graph
+LLM                     qwen2.5-coder:3b                         Code-oriented answer
+generation
 
-Graph layout
+Version control         Git and GitHub                             Source control
 
-Dagre
+The model names above reflect the documented development configuration.
+Check the application configuration and dependency files if you have
+changed them.
 
-Graph node positioning
-
-Backend
-
-Python, FastAPI
-
-Application logic and HTTP API
-
-Request validation
-
-Pydantic
-
-API request validation
-
-Code parsing
-
-Python AST
-
-Extract Python code structure
-
-Graph construction
-
-NetworkX
-
-Represent repository relationships
-
-Embeddings
-
-Sentence Transformers
-
-Generate vector representations of code chunks
-
-Embedding model
-
-sentence-transformers/all-MiniLM-L6-v2
-
-Text/code-chunk embeddings
-
-Numerical processing
-
-NumPy
-
-Process embedding arrays
-
-Local LLM runtime
-
-Ollama
-
-Run the configured language model locally
-
-LLM
-
-qwen2.5-coder:3b
-
-Code-oriented answer generation
-
-Version control
-
-Git and GitHub
-
-Source control
-
-The listed model names reflect the documented development configuration. Check the application configuration and dependency files if you have changed them.
-
-How It Works
+ How It Works
 
 Repository Analysis
 
@@ -216,7 +175,8 @@ The backend clones the repository.
 
 The scanner identifies supported source files.
 
-Python AST parsing extracts structural information such as imports, classes, functions, methods, and source-line ranges.
+Python AST parsing extracts structural information such as imports,
+classes, functions, methods, and source-line ranges.
 
 Dependency-analysis components process the extracted information.
 
@@ -224,29 +184,37 @@ NetworkX builds the repository graph.
 
 The backend returns graph data for rendering in React Flow.
 
-Users can select graph nodes, inspect component details, and open source files.
+Users can select graph nodes, inspect component details, and open
+source files.
 
 RAG-Based Question Answering
 
-Source code is divided into chunks using symbol information and line ranges.
+Source code is divided into chunks using symbol information and line
+ranges.
 
 Sentence Transformers generates embeddings for the chunks.
 
-The application stores the embeddings and associated metadata in a local index.
+The application stores the embeddings and associated metadata in a
+local index.
 
 A user's question is processed using semantic and keyword retrieval.
 
-Weighted Reciprocal Rank Fusion combines retrieval rankings; identifier matching can help surface code related to specific names.
+Weighted Reciprocal Rank Fusion combines retrieval rankings;
+identifier matching can help surface code related to specific names.
 
-The context builder assembles relevant chunks with file paths, symbol names, line ranges, and source code.
+The context builder assembles relevant chunks with file paths,
+symbol names, line ranges, and source code.
 
-The context and question are sent to the configured local LLM through Ollama.
+The context and question are sent to the configured local LLM
+through Ollama.
 
-The backend returns the answer and retrieved-source metadata for inspection in the frontend.
+The backend returns the answer and retrieved-source metadata for
+inspection in the frontend.
 
-Answer quality depends on retrieval quality, the available context, and the language model. Verify important claims against the source code.
+Answer quality depends on retrieval quality, the available context, and
+the language model. Verify important claims against the source code.
 
-Prerequisites
+ Prerequisites
 
 Install the following before running the project:
 
@@ -260,22 +228,21 @@ Conda or another Python environment manager
 
 Ollama
 
-Sufficient disk space for the repository, dependencies, embedding model, and LLM
+Sufficient disk space for the repository, dependencies, embedding
+model, and LLM
 
 The first model download requires an internet connection.
 
-Installation
+ Installation
 
 1. Clone the Repository
 
-Replace the placeholder with the actual GitHub URL for DEFINE-AI.
-
-git clone https://github.com/Satyamxo/Define-ai/
-cd define ai
+git clone https://github.com/Satyamxo/Define-ai.git
+cd Define-ai
 
 2. Set Up the Backend
 
-From the project root:
+Run these commands from the project root:
 
 cd backend
 conda create -n define-ai python=3.12
@@ -283,7 +250,8 @@ conda activate define-ai
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 
-If you already have a compatible environment, activate it instead of creating another one.
+If you already have a compatible environment, activate it instead of
+creating another one.
 
 3. Set Up the Frontend
 
@@ -294,14 +262,17 @@ npm install
 
 4. Set Up Ollama
 
-Install Ollama using its official instructions: ollama.com.
+Install Ollama using the instructions on the official Ollama
+website.
 
 Download the model used by the documented configuration:
 
 ollama pull qwen2.5-coder:3b
 ollama list
 
-Make sure Ollama is running and the model is available before asking questions. If your application configuration uses a different model, pull that model and update the relevant configuration accordingly.
+Make sure Ollama is running and the model is available before asking
+questions. If your application configuration uses a different model,
+pull that model and update the relevant configuration accordingly.
 
 5. Embedding Model
 
@@ -309,23 +280,27 @@ The documented embedding model is:
 
 sentence-transformers/all-MiniLM-L6-v2
 
-Sentence Transformers may download the model automatically the first time it is needed.
+Sentence Transformers may download the model automatically the first
+time it is needed.
 
-Run the Application
+ Run the Application
 
 Start the Backend
 
-From the backend directory, with the define-ai environment activated:
+From the backend directory, with the define-ai environment
+activated:
 
 uvicorn app.main:app --reload
 
-The API is expected to be available at http://127.0.0.1:8000 if that is the host and port configured by the application.
+The API is expected to be available at http://127.0.0.1:8000 if that
+is the host and port configured by the application.
 
 Interactive API documentation is typically available at:
 
 http://127.0.0.1:8000/docs
 
-Confirm the import path and routes against the current backend code if your project structure differs.
+Confirm the import path and routes against the current backend code if
+your project structure differs.
 
 Start the Frontend
 
@@ -336,25 +311,34 @@ npm run dev
 
 Open the local URL printed by Vite, typically http://localhost:5173.
 
-The backend must be running while using the frontend. The frontend's API base URL must point to the running backend.
+The backend must be running while using the frontend. The frontend's API
+base URL must point to the running backend.
 
-Index a Repository for Q&A
+ Index a Repository for Q&A
 
 The repository must be indexed before asking questions about its code.
 
-The documented indexing script is backend/index_repository.py. From the backend directory, run:
+The documented indexing script is backend/index_repository.py. From
+the backend directory, run:
 
 python index_repository.py "./repositories/<REPOSITORY_FOLDER>"
 
-Replace <REPOSITORY_FOLDER> with the actual directory name of the cloned repository. For example, if the repository folder is AI_Video_Agent:
+Replace <REPOSITORY_FOLDER> with the actual directory name of the
+cloned repository. For example, if the repository folder is
+AI_Video_Agent:
 
 python index_repository.py "./repositories/AI_Video_Agent"
 
-The indexing workflow analyzes the repository, creates source-code chunks, generates embeddings, and saves the index and associated metadata under the configured RAG index directory (documented as backend/data/rag_indexes/).
+The indexing workflow analyzes the repository, creates source-code
+chunks, generates embeddings, and saves the index and associated
+metadata under the configured RAG index directory (documented as
+backend/data/rag_indexes/).
 
-Repository cloning and indexing are separate operations. Rebuild the index when the source code changes or when the chunking or embedding configuration changes.
+Repository cloning and indexing are separate operations. Rebuild the
+index when the source code changes or when the chunking or embedding
+configuration changes.
 
-Using DEFINE-AI
+ Using DEFINE-AI
 
 Start the backend and frontend.
 
@@ -370,23 +354,27 @@ Ensure the repository has been indexed for RAG.
 
 Open the AI chat and ask a question about the repository.
 
-Inspect the retrieved source metadata and verify important answers against the code.
+Inspect the retrieved source metadata and verify important answers
+against the code.
 
-Example Questions
+ Example Questions
 
 Explain how process_input works and what it returns.
 
-How does the application process a video URL and transcribe its audio?
+How does the application process a video URL and transcribe its
+audio?
 
-How does this repository create embeddings and retrieve relevant code?
+How does this repository create embeddings and retrieve relevant
+code?
 
 Which components are involved in constructing the RAG pipeline?
 
 Which source files are relevant to this functionality?
 
-The answer depends on the repository being indexed and the code retrieved for the question.
+The answer depends on the repository being indexed and the code
+retrieved for the question.
 
-Repository and Index Storage
+ Repository and Index Storage
 
 The documented development layout stores cloned repositories under:
 
@@ -394,635 +382,17 @@ backend/
 └── repositories/
 
 RAG indexes are documented as being stored under:
-=======
-Understand codebases. Explore software architecture. Ask questions about code using AI.
-
-DEFINE-AI is an AI-powered repository intelligence system designed to help developers understand unfamiliar codebases. It analyzes repository structure, extracts code relationships, visualizes dependencies, and answers questions using Retrieval-Augmented Generation (RAG).
-
-Instead of relying entirely on an LLM to understand a repository, DEFINE-AI combines static code analysis, graph-based visualization, hybrid retrieval, and a locally running language model to provide explanations grounded in source code.
-
-1. Project Overview
-
-Understanding an unfamiliar software repository can be time-consuming, especially when it contains multiple modules, classes, functions, and dependencies.
-
-DEFINE-AI aims to simplify this process by combining repository analysis with AI-assisted code exploration.
-
-Users can provide a GitHub repository URL, explore its structure through an interactive graph, inspect source files, and ask natural-language questions about the implementation.
-
-The system uses static analysis to extract structural information and a RAG pipeline to retrieve relevant source code before generating answers.
-
-Project Goals
-Simplify exploration of unfamiliar repositories.
-Visualize relationships between software components.
-Retrieve relevant source code for natural-language questions.
-Generate code explanations grounded in repository evidence.
-Provide source references that users can inspect.
-Support local LLM inference to reduce dependence on paid AI APIs.
-Current Scope
-
-The current implementation focuses on Python source-code analysis and repository question answering.
-
-Support for additional programming languages and more advanced graph-aware reasoning are potential future improvements.
-
-2. Problem Statement
-
-Understanding a large or unfamiliar codebase often requires developers to manually inspect files, follow imports, trace function calls, and understand how individual components interact.
-
-This creates several challenges:
-
-Codebase complexity: Relationships between modules and functions can be difficult to understand.
-Time-consuming exploration: Developers may spend significant time locating relevant implementation details.
-Disconnected information: Source files, dependency relationships, and explanations are often explored separately.
-Unreliable AI explanations: An LLM without relevant source-code context may produce incorrect or unsupported explanations.
-Limited traceability: Developers need to verify explanations against the actual implementation.
-
-DEFINE-AI addresses these challenges by combining structural repository analysis, interactive visualization, hybrid code retrieval, and context-grounded LLM responses.
-
-The objective is to help developers move from a repository overview to specific implementation details with less manual effort.
-
-3. Key Features
-Repository Analysis
-Accepts GitHub repository URLs.
-Clones repositories through the backend.
-Scans repository files.
-Extracts Python classes, functions, methods, and imports using AST parsing.
-Analyzes repository structure and dependencies.
-Interactive Architecture Visualization
-Builds a graph representation using NetworkX.
-Displays repository relationships through React Flow.
-Uses graph layout algorithms to organize nodes.
-Supports node selection and nested expansion and collapse.
-Displays additional information about selected nodes.
-Source Code Exploration
-Retrieves source files through the backend API.
-Displays code with line numbers.
-Supports source-range highlighting.
-Connects graph exploration with code inspection.
-Retrieval-Augmented Generation
-Splits source code into retrieval-friendly chunks.
-Preserves file paths, symbol names, and line ranges.
-Generates embeddings using Sentence Transformers.
-Stores embeddings and chunk metadata in a local vector index.
-Combines semantic and keyword retrieval.
-Uses weighted reciprocal-rank fusion to combine rankings.
-Supplies retrieved code to an LLM for question answering.
-AI Code Assistant
-Accepts natural-language questions about a repository.
-Uses retrieved source code to construct the LLM context.
-Generates explanations through a local Ollama model.
-Returns retrieved source metadata with answers.
-Supports source navigation from the chat interface.
-Local Inference
-
-The RAG pipeline is designed to work with local embeddings and a locally running Ollama model, avoiding the need for a paid LLM API in the current development setup.
-
-4. Architecture
-
-DEFINE-AI consists of a React frontend, a FastAPI backend, a repository-analysis pipeline, and a RAG-based question-answering system.
-
-High-Level Architecture
-                    User
-                     |
-                     v
-             React Frontend
-          +--------------------+
-          | Repository Input   |
-          | Interactive Graph  |
-          | Code Viewer        |
-          | AI Chat Interface  |
-          +--------------------+
-                     |
-                     v
-               FastAPI Backend
-                     |
-          +----------+----------+
-          |                     |
-          v                     v
- Repository Analysis       RAG Pipeline
-          |                     |
-          v                     v
-    Repository Scanner      Code Chunking
-          |                     |
-          v                     v
-     Python AST Parser      Embeddings
-          |                     |
-          v                     v
- Dependency Analysis       Local Vector Index
-          |                     |
-          v                     v
-    NetworkX Graph         Hybrid Retrieval
-          |                     |
-          v                     v
-     Graph JSON             Context Builder
-          |                     |
-          v                     v
-     React Flow             Local LLM
-                                |
-                                v
-                         Generated Answer
-                                |
-                                v
-                         Retrieved Sources
-Repository Analysis Pipeline
-A user submits a GitHub repository URL.
-The backend clones the repository.
-The scanner identifies supported source files.
-The Python AST parser extracts structural information.
-The analyzer and dependency-analysis components process the extracted information.
-The graph builder constructs a graph representation.
-The graph is serialized and returned to the frontend.
-React Flow renders the graph for interactive exploration.
-Question-Answering Pipeline
-The user submits a question about the selected repository.
-The retriever loads the repository's existing vector index.
-The question is processed for semantic and keyword retrieval.
-The retrieval system ranks relevant code chunks.
-The context builder prepares source code and metadata for the LLM.
-The local LLM generates an answer using the supplied context.
-The backend returns the answer and retrieved source metadata.
-The frontend displays the response and provides source-navigation controls.
-
-The graph-analysis and RAG pipelines are currently separate components. Combining graph relationships with code retrieval for more advanced reasoning is a potential future improvement.
-
-5. Technology Stack
-Component	Technology	Purpose
-Frontend	React	User interface
-Styling	Tailwind CSS	Interface styling
-Build tooling	Vite	Frontend development and bundling
-Graph visualization	React Flow (@xyflow/react)	Interactive repository graph
-Graph layout	Dagre	Graph node positioning
-Backend	Python	Core application logic
-API framework	FastAPI	HTTP API and frontend integration
-Request validation	Pydantic	API request validation
-Code parsing	Python AST	Extracting Python code structure
-Graph construction	NetworkX	Representing repository relationships
-Embeddings	Sentence Transformers	Generating vector representations
-Embedding model	sentence-transformers/all-MiniLM-L6-v2	Semantic representations of code chunks
-Numerical processing	NumPy	Storing and processing embedding arrays
-Vector storage	Local NumPy index and JSON metadata	Persisting embeddings and source chunks
-LLM runtime	Ollama	Local language-model inference
-LLM	qwen2.5-coder:3b	Code-oriented answer generation
-Version control	Git and GitHub	Source control
-
-This table describes the current development stack. The exact versions should be documented using the project's actual dependency files.
-
-6. How It Works
-
-DEFINE-AI has two primary workflows: repository analysis and AI-powered question answering.
-
-Workflow A: Repository Analysis
-
-Step 1 — Repository Input
-
-The user submits a GitHub repository URL through the React interface.
-
-Step 2 — Repository Cloning
-
-FastAPI receives the request and calls the repository manager to clone the repository.
-
-Step 3 — Source Scanning
-
-The scanner identifies files for analysis.
-
-Step 4 — Structural Extraction
-
-The Python AST parser extracts information such as imports, functions, classes, methods, and source-line ranges.
-
-Step 5 — Dependency Analysis
-
-The analyzer processes structural information to derive repository relationships.
-
-Step 6 — Graph Construction
-
-NetworkX represents the extracted components and relationships as a graph.
-
-Step 7 — Visualization
-
-The backend returns graph data, which the frontend renders using React Flow.
-
-Users can select nodes, inspect details, expand graph sections, and open source files.
-
-Workflow B: RAG-Based Question Answering
-
-Step 1 — Code Chunking
-
-Source code is divided into chunks using symbol information and line ranges.
-
-The current chunker also handles uncovered code regions and splits larger ranges into smaller chunks.
-
-Step 2 — Embedding Generation
-
-The embedding model converts code chunks into numerical vector representations.
-
-Step 3 — Index Persistence
-
-The application stores the embeddings, chunk metadata, and index manifest locally.
-
-Step 4 — Query Processing
-
-When the user asks a question, the system performs semantic and keyword retrieval.
-
-Step 5 — Hybrid Ranking
-
-The retriever combines rankings using weighted reciprocal-rank fusion and additional identifier matching.
-
-Step 6 — Context Construction
-
-Relevant chunks are assembled into a context containing file paths, symbol names, line ranges, and source code.
-
-Step 7 — Answer Generation
-
-The context and question are sent to the local LLM through Ollama.
-
-Step 8 — Answer and Sources
-
-The backend returns the generated answer and metadata for the retrieved chunks.
-
-The frontend displays the response and allows users to open source files associated with retrieved results.
-
-The quality of the answer depends on retrieval quality, the available context, and the language model's ability to interpret that context correctly.
-
-7. Installation
-Prerequisites
-
-Install the following software before setting up the project:
-
-Git
-Python 3.12
-Conda or another Python environment manager
-Node.js and npm
-Ollama
-A compatible local language model
-
-The current setup uses a local embedding model and a local LLM. Initial model downloads require an internet connection.
-
-Clone the Project
-
-Clone the DEFINE-AI repository:
-
-git clone <YOUR_DEFINE_AI_GITHUB_URL>
-cd define-ai
-
-Replace the placeholder with the actual URL of your DEFINE-AI repository.
-
-Backend Installation
-
-Navigate to the backend:
-
-cd backend
-
-Create a Conda environment:
-
-conda create -n define-ai python=3.12
-
-Activate it:
-
-conda activate define-ai
-
-Install Python dependencies:
-
-python -m pip install --upgrade pip
-pip install -r requirements.txt
-
-If you already have an environment containing the project's dependencies, you can reuse it instead of creating another one.
-
-Frontend Installation
-
-Open a separate terminal and navigate to the frontend:
-
-cd frontend
-
-Install the dependencies:
-
-npm install
-
-The frontend uses the dependencies declared in its package manifest.
-
-8. Environment Setup
-Python Environment
-
-The backend should run inside the Python environment containing the dependencies listed in backend/requirements.txt.
-
-Activate the environment before starting the backend:
-
-conda activate define-ai
-Ollama Setup
-
-Install Ollama using its official installation instructions.
-
-Official website:
-
-https://ollama.com/
-
-Download the model used by the current configuration:
-
-ollama pull qwen2.5-coder:3b
-
-Confirm that the model is available:
-
-ollama list
-
-If the model name differs from the application's configuration, set the OLLAMA_MODEL environment variable to the installed model name.
-
-For example, in PowerShell:
-
-$env:OLLAMA_MODEL = "qwen2.5-coder:3b"
-
-Ollama must be running and the model must be available before submitting questions to the AI assistant.
-
-Embedding Model
-
-The embedding implementation uses:
-
-sentence-transformers/all-MiniLM-L6-v2
-
-The model is loaded through Sentence Transformers and can be downloaded automatically when first required.
-
-An authenticated Hugging Face account is not required for the current public embedding-model configuration.
-
-Repository Storage
-
-The backend stores cloned repositories in its configured repository directory.
-
-The current development layout uses:
-
-backend/
-└── repositories/
-RAG Index Storage
-
-The local vector indexes are stored under:
->>>>>>> 51fe244188e0c92265528401442d339d6fd9b477
 
 backend/
 └── data/
     └── rag_indexes/
 
-<<<<<<< HEAD
-These paths depend on the current application configuration. Avoid committing cloned repositories, generated indexes, virtual environments, environment files, API keys, or other local artifacts unless there is a deliberate reason to include them.
-
-Project Status
-
-DEFINE-AI brings together Python repository analysis, interactive graph visualization, hybrid code retrieval, and local-LLM question answering in one developer-focused application.
-=======
-Indexes are associated with repository paths. If a repository's source code changes, its index may need to be rebuilt.
-
-Generated indexes and source-code chunks should not be committed to Git unless there is a specific, reviewed reason to include them.
-
-9. Running the Backend
-
-Open a terminal in the backend directory:
-
-cd backend
-
-Activate the environment:
-
-conda activate define-ai
-
-Start the FastAPI application:
-
-uvicorn app.main:app --reload
-
-The development API should be available at:
-
-http://127.0.0.1:8000
-
-Open the interactive API documentation:
-
-http://127.0.0.1:8000/docs
-
-The documentation can be used to inspect and test the available endpoints.
-
-Main API Endpoints
-Endpoint	Method	Purpose
-/	GET	Check that the API is running
-/health	GET	Basic health check
-/repositories/clone	POST	Clone a GitHub repository
-/repositories/analyze	POST	Clone and analyze a repository and return its graph
-/repositories/{repository_name}/scan	GET	Scan a repository
-/repositories/{repository_name}/analyze	GET	Analyze an existing repository
-/repositories/{repository_name}/dependencies	GET	Retrieve dependency-analysis results
-/repositories/{repository_name}/graph	GET	Retrieve repository graph data
-/repositories/{repository_name}/files/{file_path}	GET	Read a source file
-/repositories/{repository_name}/ask	POST	Ask a question about an indexed repository
-
-The exact available routes should be verified against the current FastAPI application.
-
-10. Running the Frontend
-
-Open another terminal:
-
-cd frontend
-
-Start the Vite development server:
-
-npm run dev
-
-Open the local URL printed by Vite, typically:
-
-http://localhost:5173
-Using the Application
-Enter a GitHub repository URL.
-Select Analyze Repository.
-Explore the generated repository graph.
-Select graph nodes to inspect their details.
-Open files through the code viewer.
-Open the AI chat.
-Ask questions about the selected repository.
-Inspect the returned source files.
-Click a source to open the corresponding code.
-
-The backend must be running while using the frontend.
-
-The current development API configuration points to:
-
-http://127.0.0.1:8000
-
-For production deployment, the API base URL should be configurable rather than hardcoded.
-
-11. Indexing a Repository
-
-Question answering requires a vector index for the selected repository.
-
-The current development indexing script is:
-
-backend/index_repository.py
-Index the Example Repository
-
-From the backend directory, run:
-
-python index_repository.py ".\repositories\AI_Video_Ajent"
-
-The indexing workflow performs the following operations:
-
-Analyzes the repository.
-Extracts structural information.
-Creates source-code chunks.
-Generates embeddings.
-Saves the vector index and associated metadata.
-
-The index is stored under:
-
-backend/data/rag_indexes/
-
-The actual index directory is generated by the vector-store implementation.
-
-When Should an Index Be Rebuilt?
-
-Rebuild the index when:
-
-Source code changes significantly.
-The chunking implementation changes.
-The embedding model changes.
-The existing index is missing or invalid.
-You need to refresh the index after updating the repository.
-
-The indexing process should not run unnecessarily for every chat question.
-
-The current application expects an existing index when answering questions. Repository cloning and repository indexing are separate operations.
-
-12. Asking Questions
-
-Once a repository has been indexed, the AI assistant can answer questions using retrieved code.
-
-Example Questions
-
-Understanding a function
-
-Explain how process_input works and what it returns.
-
-Understanding execution flow
-
-How does the application process a video URL
-and transcribe its audio?
-
-Understanding RAG implementation
-
-How does this application retrieve relevant transcript
-chunks and use them to answer questions?
-
-Understanding architecture
-
-Which components are involved in constructing the
-RAG chain?
-
-Understanding dependencies
-
-Which functions and modules participate in this workflow?
-
-The last question may require improvements to graph-aware retrieval, depending on the repository and the information available in the current RAG context.
-
-How Answers Are Generated
-
-The system retrieves relevant chunks, constructs a context, and sends it to the configured LLM.
-
-The answer-generation prompt instructs the model to:
-
-Base repository-specific claims on supplied code.
-Avoid inventing functions, files, and APIs.
-Acknowledge insufficient evidence.
-Explain reasoning clearly.
-Cite source files and line ranges.
-Avoid claiming to have executed code that it did not execute.
-
-These instructions help encourage grounded answers, but they do not guarantee that every generated answer or citation is correct.
-
-Users should be able to inspect the underlying source code to verify important claims.
-
-13. Evaluation Results
-
-Status: Formal evaluation pending.
-
-The RAG pipeline has been exercised with example repository questions, but a formal, repeatable evaluation dataset and verified quantitative results have not yet been established.
-
-No accuracy, Recall@K, MRR, latency, or benchmark figures are claimed here.
-
-Planned Evaluation
-
-The next evaluation phase will measure retrieval quality, answer quality, citation accuracy, and application reliability.
-
-Retrieval Evaluation
-
-Create a verified dataset of repository questions with expected relevant files or symbols.
-
-Potential metrics:
-
-Metric	Purpose	Result
-Recall@5	Measures how many relevant items appear in the top five results	Pending
-MRR	Measures the rank of the first relevant result	Pending
-Source-file hit rate	Measures how often a relevant source file is retrieved	Pending
-Answer Evaluation
-
-Assess whether generated answers:
-
-Correctly describe the implementation.
-Use relevant source code.
-Provide valid file and line references.
-Avoid unsupported implementation claims.
-Acknowledge insufficient evidence.
-Reliability Evaluation
-
-Test:
-
-Invalid repository URLs.
-Missing indexes.
-Invalid questions.
-Unavailable LLM services.
-Repository switching.
-Source-file navigation.
-Larger repositories and files.
-
-Once the evaluation has been run, replace the pending entries with measured results and document the dataset, methodology, and limitations.
-
-14. Limitations
-
-DEFINE-AI is an evolving project, and the current implementation has several limitations.
-
-Retrieval Quality
-
-Hybrid retrieval combines semantic and keyword ranking, but relevant code may still be missed or ranked incorrectly.
-
-Retrieval quality depends on the embedding model, chunking strategy, query wording, and repository structure.
-
-Answer Accuracy
-
-LLM-generated explanations can contain incorrect interpretations even when relevant source code is retrieved.
-
-Source citations must be verified against the underlying implementation.
-
-Context Limitations
-
-The LLM receives selected source chunks rather than the entire repository. Some questions may require information that is not included in the retrieved context.
-
-Local Hardware
-
-Embedding generation and local LLM inference require computational resources. Response time and supported model sizes depend on available hardware and configuration.
-
-Repository Size
-
-Large repositories may increase cloning, parsing, indexing, memory, and retrieval costs. Performance limits have not yet been formally benchmarked.
-
-Index Freshness
-
-A saved index can become outdated when the underlying repository changes. Index refresh and invalidation must be handled appropriately.
-
-Graph-Aware Reasoning
-
-The repository graph and RAG pipeline currently operate as separate components. Full graph-aware question answering is a potential future improvement.
-
-Deployment
-
-The current setup is designed primarily for local development. Production deployment, multi-user isolation, authentication, rate limiting, and operational monitoring require additional work.
-
-
-Project Status
-
-DEFINE-AI has an implemented foundation for repository analysis, interactive graph visualization, code retrieval, and local-LLM question answering.
-
-The current development focus is on completing the integrated user experience, evaluating RAG quality, improving reliability, and documenting reproducible setup and testing procedures.
-
-The objective is not simply to generate AI explanations, but to help developers understand a codebase through inspectable repository structure and source-code evidence.
-
-License
-
-Add a license before publicly distributing the project. Until a license is selected and included, users should not assume that the repository grants permission to reuse, modify, or redistribute the code.
->>>>>>> 51fe244188e0c92265528401442d339d6fd9b477
+These paths depend on the current application configuration. Avoid
+committing cloned repositories, generated indexes, virtual environments,
+environment files, API keys, or other local artifacts unless there is a
+deliberate reason to include them.
+
+📄 License
+
+This project is licensed under the MIT License. See the
+LICENSE file for details.
